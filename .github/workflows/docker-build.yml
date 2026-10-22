@@ -1,4 +1,4 @@
-name: Docker Build CI
+name: Docker Build and Push
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   docker-build:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +20,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false
-          tags: devops-python-app:latest
+          push: true
+          tags: mahroof01/devops-python-app:latest
