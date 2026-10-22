@@ -35,4 +35,6 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: mahroof01/devops-python-app:latest
+          tags: |
+            mahroof01/devops-python-app:latest
+            mahroof01/devops-python-app:v1
